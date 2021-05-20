@@ -7,7 +7,7 @@ My Math API provides randomly generated
 practice arithmetic problems and also computes
 answers to problems given by the API user.
 
-## Get randomly-generated practice arithmetic problem
+## Get randomly generated practice arithmetic problem
 **Request Format:** /practice
 
 **Request Type:** GET
@@ -15,7 +15,7 @@ answers to problems given by the API user.
 **Returned Data Format**: JSON
 
 **Description:** Returns a JSON object containing
-100 practice arithmetic problems
+100 randomly generated practice arithmetic problems
 
 **Example Request:** /practice
 
