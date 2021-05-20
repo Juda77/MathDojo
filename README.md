@@ -1,6 +1,6 @@
 # Math Dojo
 This program is a platform for users to practice math problems. It provides randomly generated arithmetic problems, and 
-also checks the user's answers to make sure they are correct(my API takes math problems as input and sends back their answers). 
+also checks the user's answers to make sure they are correct(my API takes math problems as input, evaluates them, then sends back their answers). 
 
 This JS program contains both client-side and server-side Javascript. This is my
 first experience with writing my own API with Node.js
