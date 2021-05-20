@@ -3,7 +3,7 @@ JS program that writes both client-side and server-side Javascript. This program
 first experience with writing my own API with Node.js
 
 # My Math API Documentation
-My Math API provides randomly-generated
+My Math API provides randomly generated
 practice arithmetic problems and also computes
 answers to problems given by the API user.
 
