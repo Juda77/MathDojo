@@ -1,5 +1,8 @@
 # Math Dojo
-JS program that writes both client-side and server-side Javascript. This program provides users with a platform to practice math problems. This is my
+This program is a platform for users to practice math problems. It provides randomly generated arithmetic problems, and 
+also checks the user's answers to make sure they are correct.
+
+This JS program contains both client-side and server-side Javascript. This is my
 first experience with writing my own API with Node.js
 
 # My Math API Documentation
