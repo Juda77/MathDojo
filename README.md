@@ -2,7 +2,7 @@
 JS program that writes both client-side and server-side Javascript. This program provides users with a platform to practice math problems. This is my
 first experience with writing my own API with Node.js
 
-# Math API Documentation
+# My Math API Documentation
 The Math API provides randomly-generated
 practice arithmetic problems and also computes
 answers to problems given by the API user.
