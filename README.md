@@ -2,8 +2,15 @@
 This program is a platform for users to practice math problems. It provides randomly generated arithmetic problems, and 
 also checks the user's answers to make sure they are correct(my API takes math problems as input, evaluates them, then sends back their answers). 
 
+<p>
 This JS program contains both client-side and server-side Javascript. This is my
-first experience with writing my own API with Node.js
+first experience with writing my own API with Node.js. I created an API based on math which
+currently has two functionalities: 
+</p>
+<ol>
+  <li>Generate random practice math problems and send them to the API caller</li>
+  <li>Compute answers to math problems given by the API caller, and return the answers</li>
+</ol>
 
 # My Math API Documentation
 My Math API provides randomly generated
