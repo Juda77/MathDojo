@@ -12,6 +12,8 @@ currently has two functionalities:
   <li>Compute answers to math problems given by the API caller, and return the answers</li>
 </ol>
 
+Below is the official documentation for my math API
+
 # My Math API Documentation
 My Math API provides randomly generated
 practice arithmetic problems and also computes
