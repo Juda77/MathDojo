@@ -19,7 +19,7 @@ My Math API provides randomly generated
 practice arithmetic problems and also computes
 answers to problems given by the API user.
 
-## Get randomly generated practice arithmetic problem
+## Functionality 1: Get randomly generated practice arithmetic problem
 **Request Format:** /practice
 
 **Request Type:** GET
@@ -47,7 +47,7 @@ answers to problems given by the API user.
 - N/A: It's not possible for the user to accidentally
 send wrong parameters
 
-## Get answer to arithmetic problem
+## Functionality 2: Get answer to arithmetic problem
 **Request Format:** /solve/:expression
 
 **Request Type:** GET
