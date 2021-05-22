@@ -1,5 +1,5 @@
 # Math Dojo
-This program is a platform for users to practice math problems. It provides randomly generated arithmetic problems, and 
+This program is a platform for users to practice math problems(it's sort of like my own version of MyMathLab, WebAssign, and various other STEM practice platforms). It provides randomly generated arithmetic problems, and 
 also checks the user's answers to make sure they are correct(my API takes math problems as input, evaluates them, then sends back their answers). 
 
 <p>
