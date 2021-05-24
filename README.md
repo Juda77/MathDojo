@@ -12,6 +12,7 @@ currently has two functionalities:
   <li>Compute answers to math problems given by the API caller, and return the answers</li>
 </ol>
 
+In its current state, this program currently only involves arithmetic problems
 Below is the official documentation for my math API
 
 # My Math API Documentation
