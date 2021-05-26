@@ -59,12 +59,12 @@ send wrong parameters
 a route(required) parameter, then sends back the answer
 to that arithmetic problem.
 
-**Example Request:** /solve/2+2-2
+**Example Request:** /solve/2+(2-2)
 
 **Example Response:**
 
 ```
-"0"
+"2"
 ```
 
 **Error Handling:**
