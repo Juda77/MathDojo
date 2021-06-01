@@ -57,7 +57,9 @@ send wrong parameters
 
 **Description:** Accepts a math arithmetic problem as
 a route(required) parameter, then sends back the answer
-to that arithmetic problem.
+to that arithmetic problem. My algorithm uses Dijkstra's
+<a href="https://en.wikipedia.org/wiki/Shunting-yard_algorithm">shunting yard algorithm</a>
+to compute the problem.
 
 **Example Request:** /solve/2+(2-2)
 
