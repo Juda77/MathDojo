@@ -2,7 +2,16 @@
 This program is a web app for users to practice math problems(it's sort of like my own version of MyMathLab, WebAssign, and various other STEM practice platforms). It provides randomly generated math problems, and 
 also checks the user's answers to make sure they are correct. 
 
-This program is comprised of both client-side and server-side components. The client-side code(HTML, CSS, and client-side Javascript)
+<p>This program is comprised of both client-side and server-side components.</p> 
+<header>This projects uses the following tools:</header>
+<ul>
+  <li>HTML</li>
+  <li>CSS</li>
+  <li>JavaScript</li>
+  <li>Node.js</li>
+</ul>
+<p>
+The client-side code(HTML, CSS, and client-side Javascript)
 is all in the <b>"public" folder</b>, and the server-side code(Javascript/Node.js) is in the <b>"app.js"</b> file.
 This is my first experience with writing my own API with Node.js. I created an API based on math which
 currently has two functionalities: 
