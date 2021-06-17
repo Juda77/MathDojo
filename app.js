@@ -22,8 +22,44 @@ const express = require('express');
 // instantiate an instance of the express
 const app = express();
 
+/**
+ * Require sqlite and sqlite3 modules
+ * in this project.
+ * -sqlite3 provides the code/functionality
+ * for reading and writing to a database
+ * -sqlite adds promises to sqlite3
+ */
+
+const sqlite3 = require("sqlite3");
+const sqlite = require("sqlite");
+
+/**
+ * require the MathFunction class that I created
+ * this will allow me to actually make MathFunction
+ * objects in this file
+ */
+
+const MathFunction = require("./MathFunction.js");
+
+
 // define API endpoint GET request for getting randomy-generated math problems
 app.get("/practice", sendArithmeticProblems);
+
+// define API endpoint GET request for getting the answer to a math problem
+app.get("/solve/:expression", sendBackAnswer);
+
+
+
+function practice() {
+
+  let mathFunction = new MathFunction("1+1");
+  console.log(mathFunction.computeExpression());
+}
+
+
+
+
+
 
 /**
  * Kick-starts the process of generating random arithmetic problems,
@@ -45,6 +81,8 @@ function sendArithmeticProblems(request, response) {
  * form of a string
  */
 function generateArithmeticProblems() {
+
+  practice();
   let problems = {};
 
   // generate 100 problems
@@ -90,9 +128,6 @@ function generateArithmeticProblem() {
   return problem;
 }
 
-// define API endpoint GET request for getting the answer to a math problem
-app.get("/solve/:expression", sendBackAnswer);
-
 /**
  * This function gets called when the API caller makes a GET request
  * to solve a particular math problem. This function is responsible for
@@ -106,7 +141,10 @@ app.get("/solve/:expression", sendBackAnswer);
  */
 function sendBackAnswer(request, response) {
   let expression = request.params["expression"];
-  let answer = computeExpression(expression);
+
+  expression = new MathFunction(expression);
+
+  let answer = expression.computeExpression();
 
   // if answer got returned null, then something was wrong with the input format
   if (answer === null) {
@@ -122,168 +160,6 @@ function sendBackAnswer(request, response) {
   }
 }
 
-/**
- * This function is responsible for taking the user input
- * and then outputting the result of the expression
- * to the user.
- * This function does not handle the computation
- * of the expression itself; there are other functions
- * which do that
- * @param {String} expression - String representation
- * of the expression input taken by the caller of this
- * API
- * @returns {String} - returns a String representation
- * of the answer of the original expression
- */
-function computeExpression(expression) {
-  let infixExpression = expression;
-  if (infixExpression === null) { // something was wrong with the input format
-    return null;
-  }
-  let postFixExpression = infixToPostfix(infixExpression);
-  if (postFixExpression === null) { // something was wrong with the input format
-    return null;
-  }
-  return evaluatePostFixExpression(postFixExpression) + "";
-}
-
-/**
- * Implements Dijkstra's Shunting-yard algorithm
- * for converting mathematical expressions
- * from infix notation(standard notation) to postfix notation.
- * We want to convert the expression into postfix notation
- * because it makes it easy to compute the expression
- *
- * @param {String} expression - String which represents the
- * mathematical expression input from the user
- * ex: 3 + (6 / 2) * 2
- *
- * @returns {Array}- returns an array postfix version
- * of the origin infix expression parameter
- */
-function infixToPostfix(expression) {
-
-  let outputQueue = [];
-  let operatorStack = [];
-
-  // use a hashmap to assign a precedence for each operator
-  let operatorPrecedences = new Map([
-    ['*', 2],
-    ['/', 2],
-    ['+', 1],
-    ['-', 1],
-    ['(', 0]
-  ]);
-
-  for (let i = 0; i < expression.length; i++) {
-    let curr = expression.charAt(i);
-    if (isNum(curr)) {
-      let num = curr;
-      i++;
-      while (i < expression.length && isNum(expression.charAt(i))) {
-        curr = expression.charAt(i);
-        if (curr !== ' ') {
-          num += curr;
-        }
-        i++;
-      }
-      outputQueue.push(num);
-      if (i !== expression.length) {
-        i--;
-      }
-    } else if (isOperator(curr)) {
-      if (operatorStack.length === 0 || curr === '(') {
-        operatorStack.push(curr);
-      } else if (curr === ')') {
-        let operator = operatorStack.pop();
-        while (operatorStack.length > 0 && operator !== '(') {
-          outputQueue.push(operator);
-          operator = operatorStack.pop();
-        }
-      } else {
-
-        // while element on top of stack has greater or equal precedence than curr
-        while (operatorStack.length > 0 &&
-        operatorPrecedences.get(operatorStack[operatorStack.length - 1]) >=
-        operatorPrecedences.get(curr)) {
-          let operator = operatorStack.pop();
-          outputQueue.push(operator);
-        }
-        operatorStack.push(curr);
-      }
-    } else if (curr === ' ') {
-      continue;
-    } else {
-      return null;
-    }
-  }
-  while (operatorStack.length > 0) {
-    outputQueue.push(operatorStack.pop());
-  }
-  return outputQueue;
-}
-
-/**
- * This function takes the postFix version of the user's expression,
- * evaluates it mathematically, then returns the result
- * @param {Array} expression - the postFix version of the user's input expression
- * @returns {int} - return the result of the expression
- */
-function evaluatePostFixExpression(expression) {
-  let stackOfNumbers = [];
-  for (let i = 0; i < expression.length; i++) {
-    let curr = expression[i];
-    if (isNum(curr)) {
-      const ZEROASASCII = 48;
-      stackOfNumbers.push(curr.charCodeAt() - ZEROASASCII);
-    } else if (isOperator(curr)) {
-      if (stackOfNumbers.length < 2) {
-        return null;
-      }
-      let num2Int = stackOfNumbers.pop();
-      let num1Int = stackOfNumbers.pop();
-      let result = 0;
-      if (curr === '+') {
-        result = num1Int + num2Int;
-      } else if (curr === '-') {
-        result = num1Int - num2Int;
-      } else if (curr === '*') {
-        result = num1Int * num2Int;
-      } else if (curr === '/') {
-        result = num1Int / num2Int;
-      }
-      stackOfNumbers.push(result);
-
-    }
-  }
-  return stackOfNumbers.pop();
-}
-
-/**
- * This function takes a symbol/char and determines if it is
- * a number or not.
- * @param {char} symbol - takes in a symbol(char of the expression)
- * @returns {boolean} - returns a boolean which represents whether or not
- * the symbol is a number. Returns true if it is a number, otherwise return false
- */
-function isNum(symbol) {
-  const LOWERNUMASCIIBOUND = 48;
-  const UPPERNUMASCIIBOUND = 57;
-  return LOWERNUMASCIIBOUND <= symbol.charCodeAt() &&
-  symbol.charCodeAt() <= UPPERNUMASCIIBOUND;
-}
-
-/**
- * This function takes a symbol/char and determines if it is
- * an operator or not.
- * @param {char} symbol - takes in a symbol(char of the expression)
- * @returns {boolean} - returns a boolean which represents whether or not
- * the symbol is an operator. Returns true if it is an operator, otherwise return false
- */
-function isOperator(symbol) {
-  return symbol === '*' || symbol === '/' || symbol === '+' || symbol === '-' ||
-  symbol === '(' || symbol === ')';
-}
 
 app.use(express.static('public'));
 

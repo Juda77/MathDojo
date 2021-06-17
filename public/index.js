@@ -169,7 +169,7 @@
     try {
       let currProblem = practiceProblems[currProblemIndex - 1];
       let response = await fetch(URL + "/solve/" + currProblem);
-      await statusCheck(response);
+      statusCheck(response);
       let actualAnswer = await response.text();
       verifyUserAnswer(actualAnswer);
     } catch (error) {
