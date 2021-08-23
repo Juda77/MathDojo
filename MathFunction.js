@@ -1,8 +1,6 @@
 // naming convention is PascalCase
 module.exports = class MathFunction {
 
-
-
   // constructor
   constructor(mathFunction) {
 
@@ -55,21 +53,6 @@ module.exports = class MathFunction {
 
     let outputQueue = [];
     let operatorStack = [];
-
-    // use a hashmap to assign a precedence for each operator
-    let operatorPrecedences = new Map([
-      ['sin', 4],
-      ['cos', 4],
-      ['tan', 4],
-      ['ln', 4],
-
-      ['^', 3],
-      ['*', 2],
-      ['/', 2],
-      ['+', 1],
-      ['-', 1],
-      ['(', 0]
-    ]);
 
     for (let i = 0; i < expression.length; i++) {
       let curr = expression.charAt(i);
@@ -178,7 +161,5 @@ module.exports = class MathFunction {
     return symbol === '^' || symbol === '*' || symbol === '/' || symbol === '+'
     || symbol === '-' || symbol === '(' || symbol === ')';
   }
-
-
 
 };

@@ -1,6 +1,4 @@
 /*
- * Name: Juda Fernandez
- * Section: AM - Fadel
  * Description: Provides the API endpoints
  * for my math dojo. There are two endpoints:
  * 1. GET — sends back a randomly generated
@@ -23,13 +21,25 @@ const express = require('express');
 const app = express();
 
 /**
+ * multer is the node module needed for us to
+ * parse data from POST requests which are in the
+ * form of forms and json
+ */
+const multer = require("multer");
+app.use(multer().none());
+
+// give node the ability to parse JSON
+// also limit the size of incoming data to 1 mb max
+// to prevent a large influx of data
+app.use(express.json({limit: "1mb"}));
+
+/**
  * Require sqlite and sqlite3 modules
  * in this project.
  * -sqlite3 provides the code/functionality
  * for reading and writing to a database
  * -sqlite adds promises to sqlite3
  */
-
 const sqlite3 = require("sqlite3");
 const sqlite = require("sqlite");
 
@@ -38,9 +48,7 @@ const sqlite = require("sqlite");
  * this will allow me to actually make MathFunction
  * objects in this file
  */
-
 const MathFunction = require("./MathFunction.js");
-
 
 // define API endpoint GET request for getting randomy-generated math problems
 app.get("/practice", sendArithmeticProblems);
@@ -48,16 +56,14 @@ app.get("/practice", sendArithmeticProblems);
 // define API endpoint GET request for getting the answer to a math problem
 app.get("/solve/:expression", sendBackAnswer);
 
+app.post("/store-problem", storeInDatabase);
 
 
-function practice() {
+function storeInDatabase(request, response) {
+  console.log("Post: " + request.body.solvedProblem);
+  let db = getDBConnection("problems-solved.db");
 
-  let mathFunction = new MathFunction("1+1");
-  console.log(mathFunction.computeExpression());
 }
-
-
-
 
 
 
@@ -82,7 +88,6 @@ function sendArithmeticProblems(request, response) {
  */
 function generateArithmeticProblems() {
 
-  practice();
   let problems = {};
 
   // generate 100 problems
@@ -102,13 +107,13 @@ function generateArithmeticProblems() {
  */
 function generateArithmeticProblem() {
   let problem = "";
-  const MAXAMOUNTOFTERMS = 5;
+  const MAXAMOUNTOFTERMS = 3;
   const MINAMOUNTOFTERMS = 2;
   let numberOfTerms = Math.floor(Math.random() * MAXAMOUNTOFTERMS) +
   MINAMOUNTOFTERMS;
   let operators = ["+", "-", "*"];
   const MINNUMBER = 1;
-  const MAXNUMBER = 9;
+  const MAXNUMBER = 10;
   let randomNum;
   const MAXINDEX = 3;
 
@@ -160,6 +165,19 @@ function sendBackAnswer(request, response) {
   }
 }
 
+// Establishes a database connection to the database and
+// returns the database object. * Any errors that occur should
+// be caught in the function that calls this one.
+// @param {string} dbFilePath the relative location to store
+// this database * @returns {Object} - The database object for
+// the connection.
+async function getDBConnection(dbFilePath) {
+  const db = await sqlite.open({
+    filename: dbFilePath,
+    driver: sqlite3.Database
+  });
+  return db;
+}
 
 app.use(express.static('public'));
 

@@ -77,7 +77,8 @@
    */
   function displayNewProblem() {
     let newProblem = document.createElement("p");
-    newProblem.textContent = practiceProblems[currProblemIndex];
+    newProblem.textContent = "Problem: " +
+    practiceProblems[currProblemIndex];
     id("problem-set").removeChild(id("problem-set").lastChild);
     id("problem-set").prepend(newProblem);
     currProblemIndex++;
@@ -125,20 +126,26 @@
    */
   function verifyUserAnswer(actualAnswer) {
 
-    // get the answer that the user input
+    // get the problem and the answer that the user input
+    let solvedProblem = practiceProblems[currProblemIndex - 1];
     let userAnswer = id("user-answer").value;
     let display = qs("main");
     let message = document.createElement("p");
+    let correctlySolved = true;
+
     if (userAnswer !== actualAnswer) { // alert user that their answer is wrong
       message.textContent = "Sorry, but that answer is incorrect! Please try again.";
       display.appendChild(message);
+      correctlySolved = false;
     } else { // alert user that their answer is right
       message.textContent = "Your answer is correct!";
       display.appendChild(message);
-      let solvedProblem = practiceProblems[currProblemIndex - 1];
-      addSolvedProblemToSolvedProblems(solvedProblem, userAnswer);
+      addSolvedProblemToVisualLog(solvedProblem, userAnswer);
       displayNewProblem(); // display a new problem
     }
+
+    addProblemToDatabase(solvedProblem, userAnswer, correctlySolved);
+
     const TIME = 3000;
     setTimeout(() => { // remove the error response
       display.removeChild(display.lastChild);
@@ -153,10 +160,41 @@
    * @param {String} userAnswer - the answer to the correctly-solved
    * problem in String format
    */
-  function addSolvedProblemToSolvedProblems(solvedProblem, userAnswer) {
+  function addSolvedProblemToVisualLog(solvedProblem, userAnswer) {
     let newItem = document.createElement("p");
     newItem.textContent = solvedProblem + " = " + userAnswer;
     id("solved-problems").appendChild(newItem);
+  }
+
+  /**
+   * async function which makes an http POST request to the server
+   * to put the data into the database
+   * @param {string} solvedProblem - problem that the user did
+   * @param {string} userAnswer - answer that the user provided
+   * @param {boolean} correctlySolved - did the user solve the problem correctly?
+   */
+  async function addProblemToDatabase(solvedProblem, userAnswer, correctlySolved) {
+
+    let problemAttempt = {
+      "solvedProblem": solvedProblem,
+      "userAnswer": userAnswer,
+      "correctlySolved": correctlySolved
+    };
+
+    const OPTIONS = {
+      method: "POST",
+      headers: { // meta data about the post request
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(problemAttempt)
+
+    }
+    try {
+      await fetch("/store-problem", OPTIONS);
+    } catch(error) {
+      handleError(error);
+    }
+
   }
 
   /**
