@@ -8,7 +8,7 @@ also checks the user's answers to make sure they are correct.
   <li>HTML</li>
   <li>CSS</li>
   <li>JavaScript</li>
-  <li>Node.js</li>
+  <li>Node.js + Express</li>
   <li>SQL + SQLite RDBMS</li>
 </ul>
 <p>
