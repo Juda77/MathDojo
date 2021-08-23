@@ -14,7 +14,7 @@ also checks the user's answers to make sure they are correct.
 <p>
 The client-side code(HTML, CSS, and client-side Javascript)
 is all in the <b>"public" folder</b>, and the server-side code(Javascript/Node.js) is in the <b>"app.js" and "MathFunction.js"</b> files.
-This is my first experience with writing my own API with Node.js. I created an API based on math which
+This is my first experience with writing my own API with Node.js and working with a database. I created an API based on math which
 currently has two functionalities: 
 </p>
 <ol>
