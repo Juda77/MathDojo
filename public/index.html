@@ -9,27 +9,44 @@
 <html>
   <head>
     <meta charset="utf-8">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    ZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+    crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
-    <script src="index.js"></script>
+
     <link rel="stylesheet" href="styles.css">
+    <script src="index.js"></script>
     <title>Math Dojo</title>
   </head>
 
   <body>
     <main>
-      <header><h1>Math Dojo</h1></header>
-      <p>
-        Welcome to the Math Dojo! The Math Dojo is a place where you
-        can practice evaluating arithmetic expressions.
-      </p>
+      <section id="practice-page" class="container">
+        <header><h1>Math Dojo</h1></header>
+        <p>
+          Welcome to the Math Dojo! The Math Dojo is a place where you
+          can practice evaluating arithmetic expressions.
+        </p>
 
-      <button id="get-problem-button">Generate new random practice problem!</button>
-      <section id="problem-set">
+        <button id="get-problem-button" class="btn, btn-primary">Generate new random practice problem!</button>
+        <button id="get-problem-button" class="btn, btn-success">View previous problems!</button>
+        <section id="problem-set">
+        </section>
+
+        <section id="solved-problems">
+          <div id="correct-answer-message" class="hidden">Your answer is correct!</div>
+          <div id="incorrect-answer-message" class="hidden">Sorry, but your answer is incorrect</div>
+          <header><h2>Correctly solved problems in current session:</h2></header>
+        </section>
       </section>
 
-      <section id="solved-problems">
-        <header><h2>Correctly solved problems in current session:</h2></header>
+      <section id="past-problems-page" class="hidden">
+        <header><h1>Past problems</h1></header>
+
       </section>
 
     </main>

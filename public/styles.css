@@ -1,14 +1,31 @@
-/*
- * Name: Juda Fernandez
- * Section: AM - Fadel
- * Description: Provides styling for my math dojo webpage.
- * There's nothing too fancy; I didn't really want to spend too much
- * time on styling for this project, but I also didn't
- * want to have a bland/horrendous looking webpage lol
- */
 
 body {
-  background-color: darkred;
+  background-image: url("images/math-image.jpg");
   font-family: 'Montserrat', sans-serif;
   font-size: 150%;
+}
+
+header {
+  text-align: center;
+}
+
+#practice-page {
+  background-color:darkred;
+  border-radius: 20px;
+}
+
+#correct-answer-message {
+  background-color: green;
+  border-radius: 20px;
+  text-align: center;
+}
+
+#incorrect-answer-message {
+  background-color: red;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.hidden {
+  display: none;
 }

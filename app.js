@@ -58,14 +58,30 @@ app.get("/solve/:expression", sendBackAnswer);
 
 app.post("/store-problem", storeInDatabase);
 
+async function storeInDatabase(request, response) {
+  let solvedProblem = request.body.solvedProblem;
+  let userAnswer = request.body.userAnswer;
+  let problemEntry = "Problem: " + solvedProblem
+                    + ", your answer: " + userAnswer;
+  let solvedCorrectly = request.body.solvedCorrectly;
+  const db = await getDBConnection("problems_solved.db");
 
-function storeInDatabase(request, response) {
-  console.log("Post: " + request.body.solvedProblem);
-  let db = getDBConnection("problems-solved.db");
+  let insertQuery = "";
+  if (solvedCorrectly) {
+    insertQuery = "INSERT INTO problems_solved (correct) VALUES ($entry)";
+  } else {
+    insertQuery = "INSERT INTO problems_solved (incorrect) VALUES ($entry)";
+  }
+
+  try {
+    await db.run(insertQuery, {$entry: problemEntry});
+    await db.close(); // close the connection to the database once we're done
+  } catch(error) {
+    console.log("error: " + error);
+    response.status(500).send("Error on the server. Please try again later.");
+  }
 
 }
-
-
 
 /**
  * Kick-starts the process of generating random arithmetic problems,
@@ -113,7 +129,7 @@ function generateArithmeticProblem() {
   MINAMOUNTOFTERMS;
   let operators = ["+", "-", "*"];
   const MINNUMBER = 1;
-  const MAXNUMBER = 10;
+  const MAXNUMBER = 9;
   let randomNum;
   const MAXINDEX = 3;
 

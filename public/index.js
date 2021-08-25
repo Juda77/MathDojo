@@ -105,9 +105,10 @@
     answerBox.id = "user-answer";
     let checkButton = document.createElement("button");
     checkButton.id = "check-button";
-    checkButton.innerHTML = "Check answer!";
+    checkButton.textContent = "Check answer!";
     checkButton.addEventListener("click", getActualAnswer);
-    let main = qs("main");
+    checkButton.classList.add("btn", "btn-primary");
+    let main = id("practice-page");
     let childrenLength = main.children.length;
     main.insertBefore(answerBoxLabel, main.children[childrenLength - 1]);
     childrenLength = main.children.length;
@@ -129,27 +130,31 @@
     // get the problem and the answer that the user input
     let solvedProblem = practiceProblems[currProblemIndex - 1];
     let userAnswer = id("user-answer").value;
-    let display = qs("main");
-    let message = document.createElement("p");
+    id("user-answer").value = "";
     let correctlySolved = true;
 
     if (userAnswer !== actualAnswer) { // alert user that their answer is wrong
-      message.textContent = "Sorry, but that answer is incorrect! Please try again.";
-      display.appendChild(message);
+      id("correct-answer-message").classList.add("hidden");
+      id("incorrect-answer-message").classList.remove("hidden");
+      const TIME = 3000;
+      setTimeout(() => { // remove the error response
+        id("incorrect-answer-message").classList.add("hidden");
+      }, TIME);
+
       correctlySolved = false;
     } else { // alert user that their answer is right
-      message.textContent = "Your answer is correct!";
-      display.appendChild(message);
+      id("incorrect-answer-message").classList.add("hidden");
+      id("correct-answer-message").classList.remove("hidden");
+      const TIME = 3000;
+      setTimeout(() => { // remove the error response
+        id("correct-answer-message").classList.add("hidden");
+      }, TIME);
       addSolvedProblemToVisualLog(solvedProblem, userAnswer);
       displayNewProblem(); // display a new problem
     }
 
     addProblemToDatabase(solvedProblem, userAnswer, correctlySolved);
 
-    const TIME = 3000;
-    setTimeout(() => { // remove the error response
-      display.removeChild(display.lastChild);
-    }, TIME);
   }
 
   /**
@@ -173,12 +178,12 @@
    * @param {string} userAnswer - answer that the user provided
    * @param {boolean} correctlySolved - did the user solve the problem correctly?
    */
-  async function addProblemToDatabase(solvedProblem, userAnswer, correctlySolved) {
+  async function addProblemToDatabase(solvedProblem, userAnswer, solvedCorrectly) {
 
     let problemAttempt = {
       "solvedProblem": solvedProblem,
       "userAnswer": userAnswer,
-      "correctlySolved": correctlySolved
+      "solvedCorrectly": solvedCorrectly
     };
 
     const OPTIONS = {

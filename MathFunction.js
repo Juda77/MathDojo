@@ -54,6 +54,16 @@ module.exports = class MathFunction {
     let outputQueue = [];
     let operatorStack = [];
 
+    // use a hashmap to assign a precedence for each operator
+    let operatorPrecedences = new Map([
+      ['^', 3],
+      ['*', 2],
+      ['/', 2],
+      ['+', 1],
+      ['-', 1],
+      ['(', 0]
+    ]);
+
     for (let i = 0; i < expression.length; i++) {
       let curr = expression.charAt(i);
       if (this.isNum(curr)) {
@@ -62,7 +72,7 @@ module.exports = class MathFunction {
         while (i < expression.length && this.isNum(expression.charAt(i))) {
           curr = expression.charAt(i);
           if (curr !== ' ') {
-            num += curr;
+            num = num.concat(curr);
           }
           i++;
         }
@@ -82,9 +92,9 @@ module.exports = class MathFunction {
         } else {
 
           // while element on top of stack has greater or equal precedence than curr
-          while (operatorStack.length > 0 &&
-          operatorPrecedences.get(operatorStack[operatorStack.length - 1]) >=
-          operatorPrecedences.get(curr)) {
+          while (operatorStack.length > 0
+            && operatorPrecedences.get(operatorStack[operatorStack.length - 1]) >=
+               operatorPrecedences.get(curr)) {
             let operator = operatorStack.pop();
             outputQueue.push(operator);
           }
