@@ -54,8 +54,7 @@ answers to problems given by the API user.
 ```
 
 **Error Handling:**
-- N/A: It's not possible for the user to accidentally
-send wrong parameters
+- N/A: The API call is made through my client-side JavaScript and the user doesn't have a connection to the API from the Math Dojo website.
 
 ## Functionality 2: Get answer to arithmetic problem
 **Request Format:** /solve/:expression
