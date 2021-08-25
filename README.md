@@ -1,8 +1,7 @@
 # Math Dojo
-This program is a web app for users to practice math problems(it's sort of like my own version of MyMathLab, WebAssign, and various other STEM practice platforms). It provides randomly generated math problems, and 
+This program is a full-stack web app for users to practice math problems(it's sort of like my own mini-version of MyMathLab, WebAssign, and various other STEM practice platforms). It provides randomly generated basic math problems, and 
 also checks the user's answers to make sure they are correct. 
 
-<p>This program is comprised of both client-side and server-side components.</p> 
 <header>This project uses the following tools:</header>
 <ul>
   <li>HTML + CSS + Bootstrap</li>
@@ -54,8 +53,7 @@ answers to problems given by the API user.
 ```
 
 **Error Handling:**
-- N/A: It's not possible for the user to accidentally
-send wrong parameters
+- N/A: The API call is made through my client-side JavaScript and the user doesn't have a connection to the API from the Math Dojo website.
 
 ## Functionality 2: Get answer to arithmetic problem
 **Request Format:** /solve/:expression
