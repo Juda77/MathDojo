@@ -1,5 +1,5 @@
 # Math Dojo
-This program is a web app for users to practice math problems(it's sort of like my own version of MyMathLab, WebAssign, and various other STEM practice platforms). It provides randomly generated math problems, and 
+This program is a full-stack web app for users to practice math problems(it's sort of like my own mini-version of MyMathLab, WebAssign, and various other STEM practice platforms). It provides randomly generated basic math problems, and 
 also checks the user's answers to make sure they are correct. 
 
 <p>This program is comprised of both client-side and server-side components.</p> 
