@@ -44,7 +44,61 @@
     // listen for a click to generate a random practice problem
     id("get-problem-button").addEventListener("click", displayNewProblem);
 
+    // listen for a click to view the previous problems
+    id("view-previous-problems-button").addEventListener("click", switchToPreviousProblemsPage);
+
   }
+
+  /**
+   * This function is activated when, from the practice page, the user
+   * clicks the "view previous problems" button.
+   * This function switches the user's view from the practice page to the
+   * previous problems page, which displays problems that were attempted in the past
+   */
+  function switchToPreviousProblemsPage() {
+    id("practice-page").classList.add("hidden");
+    id("past-problems-page").classList.remove("hidden");
+    retrievePreviousProblems();
+  }
+
+  async function retrievePreviousProblems() {
+    try {
+      let previouslySolvedProblems = await fetch(URL + "/retrieve");
+      previouslySolvedProblems = await statusCheck(previouslySolvedProblems);
+
+      // get the problems in JSON format
+      previouslySolvedProblems = await previouslySolvedProblems.json();
+      displayPreviouslySolvedProblems(previouslySolvedProblems);
+    } catch(error) {
+      handleError(error);
+    }
+  }
+
+  function displayPreviouslySolvedProblems(previouslySolvedProblems) {
+
+    // get the entry: previouslySolvedProblems.correct[0].entry
+    let correctEntries = previouslySolvedProblems.correct; // array of rows
+    let correctProblemsSize = correctEntries.length;
+    let correctProblemsSection = id("correct-problems-section");
+
+    for (let i = 0; i < correctProblemsSize; i++) {
+      let newEntry = document.createElement("div");
+      newEntry.textContent = correctEntries[i].entry;
+      correctProblemsSection.appendChild(newEntry);
+    }
+
+    let incorrectEntries = previouslySolvedProblems.incorrect; // array of rows
+    let incorrectProblemsSize = incorrectEntries.length;
+    let incorrectProblemsSection = id("incorrect-problems-section");
+
+    for (let i = 0; i < incorrectProblemsSize; i++) {
+      let newEntry = document.createElement("div");
+      newEntry.textContent = correctEntries[i].entry;
+      incorrectProblemsSection.appendChild(newEntry);
+    }
+
+  }
+
 
   /**
    * Gets a list of randomly generated practice problems
@@ -101,7 +155,7 @@
     answerBoxLabel.textContent = "Type you answer here: ";
     let answerBox = document.createElement("input");
     answerBox.type = "text";
-    answerBox.placeholder = "69420";
+    answerBox.placeholder = "Input answer here";
     answerBox.id = "user-answer";
     let checkButton = document.createElement("button");
     checkButton.id = "check-button";

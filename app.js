@@ -56,9 +56,34 @@ app.get("/practice", sendArithmeticProblems);
 // define API endpoint GET request for getting the answer to a math problem
 app.get("/solve/:expression", sendBackAnswer);
 
+// deine API endpoint GET request for getting previously attempted problems from database
+app.get("/retrieve", sendPreviouslySolvedProblems);
+
+// define API endpoint POST request for sending the problem entry to the backend
 app.post("/store-problem", storeInDatabase);
 
+async function sendPreviouslySolvedProblems(request, response) {
+
+  const db = await getDBConnection("problems_solved.db");
+  let queryForCorrectlySolvedProblems = "SELECT * FROM correct";
+  let queryForIncorrectlySolvedProblems = "SELECT * FROM incorrect";
+
+  try {
+    const correctEntries = await db.all(queryForCorrectlySolvedProblems);
+    const incorrectEntries = await db.all(queryForIncorrectlySolvedProblems);
+    console.log(correctEntries);
+    response.json({
+      "correct": correctEntries,
+      "incorrect": incorrectEntries
+    });
+  } catch(error) {
+    response.type("text").status(500).send("An error occured on the server.");
+  }
+
+}
+
 async function storeInDatabase(request, response) {
+
   let solvedProblem = request.body.solvedProblem;
   let userAnswer = request.body.userAnswer;
   let problemEntry = "Problem: " + solvedProblem
@@ -66,15 +91,15 @@ async function storeInDatabase(request, response) {
   let solvedCorrectly = request.body.solvedCorrectly;
   const db = await getDBConnection("problems_solved.db");
 
-  let insertQuery = "";
+  let insertProblemQuery =  "";
   if (solvedCorrectly) {
-    insertQuery = "INSERT INTO problems_solved (correct) VALUES ($entry)";
+    insertProblemQuery =  "INSERT INTO correct (entry) VALUES ($entry)";
   } else {
-    insertQuery = "INSERT INTO problems_solved (incorrect) VALUES ($entry)";
+    insertProblemQuery =  "INSERT INTO incorrect (entry) VALUES ($entry)";
   }
 
   try {
-    await db.run(insertQuery, {$entry: problemEntry});
+    await db.run(insertProblemQuery, {$entry: problemEntry});
     await db.close(); // close the connection to the database once we're done
   } catch(error) {
     console.log("error: " + error);

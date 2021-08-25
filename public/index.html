@@ -27,13 +27,14 @@
     <main>
       <section id="practice-page" class="container">
         <header><h1>Math Dojo</h1></header>
+        <hr>
         <p>
           Welcome to the Math Dojo! The Math Dojo is a place where you
-          can practice evaluating arithmetic expressions.
+          can practice solving basic math problems.
         </p>
 
         <button id="get-problem-button" class="btn, btn-primary">Generate new random practice problem!</button>
-        <button id="get-problem-button" class="btn, btn-success">View previous problems!</button>
+        <button id="view-previous-problems-button" class="btn, btn-success">View previous problems</button>
         <section id="problem-set">
         </section>
 
@@ -45,8 +46,21 @@
       </section>
 
       <section id="past-problems-page" class="hidden">
+        <button id="view-pactice-page-button" class="btn, btn-success">Go back to practice page</button>
         <header><h1>Past problems</h1></header>
+        <section id="past-problems">
+          <div class="container">
+            <div class="row">
+              <div id="correct-problems-section" class="col">
+                <header><h1>Correctly solved problems</h1></header>
+              </div>
+              <div id="incorrect-problems-section" class="col">
+                <header><h1>Incorrectly solved problems</h1></header>
+              </div>
+            </div>
+          </div>
 
+        </section>
       </section>
 
     </main>

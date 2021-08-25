@@ -9,7 +9,16 @@ header {
   text-align: center;
 }
 
+hr {
+  color: white;
+}
+
 #practice-page {
+  background-color:darkred;
+  border-radius: 20px;
+}
+
+#past-problems-page {
   background-color:darkred;
   border-radius: 20px;
 }
