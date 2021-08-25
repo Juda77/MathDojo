@@ -32,6 +32,10 @@
    */
   let currProblemIndex = 0;
 
+  // determine if new problems were attempted so that we know
+  // if we need to make an API call to retrieve past problems
+  let newProblemsAdded = true;
+
   /**
    * function which kickstarts the whole program once the
    * necessary components(DOM and stylesheets) have loaded
@@ -56,9 +60,19 @@
    * previous problems page, which displays problems that were attempted in the past
    */
   function switchToPreviousProblemsPage() {
+
     id("practice-page").classList.add("hidden");
     id("past-problems-page").classList.remove("hidden");
-    retrievePreviousProblems();
+    id("view-practice-page-button").addEventListener("click", () => {
+      id("practice-page").classList.remove("hidden");
+      id("past-problems-page").classList.add("hidden");
+    });
+
+    if (newProblemsAdded) {
+
+      retrievePreviousProblems();
+      newProblemsAdded = false;
+    }
   }
 
   async function retrievePreviousProblems() {
@@ -81,6 +95,11 @@
     let correctProblemsSize = correctEntries.length;
     let correctProblemsSection = id("correct-problems-section");
 
+
+    while (correctProblemsSection.firstChild) {
+      correctProblemsSection.removeChild(correctProblemsSection.firstChild);
+    }
+
     for (let i = 0; i < correctProblemsSize; i++) {
       let newEntry = document.createElement("div");
       newEntry.textContent = correctEntries[i].entry;
@@ -91,9 +110,13 @@
     let incorrectProblemsSize = incorrectEntries.length;
     let incorrectProblemsSection = id("incorrect-problems-section");
 
+    while (incorrectProblemsSection.firstChild) {
+      incorrectProblemsSection.removeChild(incorrectProblemsSection.firstChild);
+    }
+
     for (let i = 0; i < incorrectProblemsSize; i++) {
       let newEntry = document.createElement("div");
-      newEntry.textContent = correctEntries[i].entry;
+      newEntry.textContent = incorrectEntries[i].entry;
       incorrectProblemsSection.appendChild(newEntry);
     }
 
@@ -234,6 +257,7 @@
    */
   async function addProblemToDatabase(solvedProblem, userAnswer, solvedCorrectly) {
 
+    newProblemsAdded = true;
     let problemAttempt = {
       "solvedProblem": solvedProblem,
       "userAnswer": userAnswer,
