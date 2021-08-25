@@ -9,7 +9,7 @@ also checks the user's answers to make sure they are correct.
   <li>CSS</li>
   <li>JavaScript</li>
   <li>Node.js + Express</li>
-  <li>SQL + SQLite RDBMS</li>
+  <li>SQL + SQLite</li>
 </ul>
 <p>
 The client-side code(HTML, CSS, and client-side Javascript)
