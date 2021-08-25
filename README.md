@@ -5,8 +5,7 @@ also checks the user's answers to make sure they are correct.
 <p>This program is comprised of both client-side and server-side components.</p> 
 <header>This project uses the following tools:</header>
 <ul>
-  <li>HTML</li>
-  <li>CSS</li>
+  <li>HTML + CSS + Bootstrap</li>
   <li>JavaScript</li>
   <li>Node.js + Express</li>
   <li>SQL + SQLite</li>
