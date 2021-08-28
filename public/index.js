@@ -1,6 +1,4 @@
 /*
- * Name: Juda Fernandez
- * Section: AM - Fadel
  * Description: This is the client-side JS code of my Math Dojo project.
  * It contributes to the project by making edits to the DOM and taking
  * input from the user.
@@ -121,7 +119,6 @@
     }
 
   }
-
 
   /**
    * Gets a list of randomly generated practice problems
